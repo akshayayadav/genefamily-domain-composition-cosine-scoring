@@ -1,0 +1,26 @@
+TARGETS, = glob_wildcards("/data/family_fasta/{name}")
+
+rule all:
+ input: 
+  "/data/final_results/domain_composition_cosine_score.txt",
+
+
+rule pfamscan:
+ input:
+  fa = "/data/family_fasta/{target}",
+  pfam_db = "/data/pfam_database/"
+ output:
+  "/data/pfamscan_results/{target}.pfamscan"
+ shell:
+  "pfam_scan.pl -fasta {input.fa} -dir {input.pfam_db} -outfile {output} -e_seq 1e-5 -e_dom 1e-5"
+
+
+rule domain_composition_cosine_scores_calculation:
+ input:
+  pf_out = expand("/data/pfamscan_results/{target}.pfamscan", target=TARGETS),
+  pf_out_dir="/data/pfamscan_results/"
+ output:
+  "/data/final_results/domain_composition_cosine_score.txt"
+ shell:
+  "domain-feature-based-family-cosine-score.py --pfamscanout_dir {input.pf_out_dir} --output {output}"
+
