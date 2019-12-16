@@ -1,6 +1,6 @@
-### Container for domain composition based genefamily scoring
+### Tool for protein-domain-composition-based-gene-family scoring
 
-This container contains application for scoring gene families using their Pfam protein domain composition. Cosine function is used to compare and score gene families.
+This container contains application for scoring gene-families using their Pfam protein domain composition. Cosine function is used to compare the protein domains of the sequences within gene-families.
 
  1. #### Downloading the container
   ```
